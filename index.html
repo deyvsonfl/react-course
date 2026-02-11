@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserva CineMaster</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="movie-container">
+      <label>Escolha um filme:</label
+      ><select id="movie">
+        <option value="10">Vingadores (R$ 10)</option>
+        <option value="12">Coringa (R$ 12)</option>
+        <option value="8">Toy Story (R$ 8)</option>
+      </select>
+    </div>
+
+    <ul class="showcase">
+      <li>
+        <div class="seat"></div>
+        <small>Livre</small>
+      </li>
+      <li>
+        <div class="seat selected"></div>
+        <small>Selecionadas</small>
+      </li>
+      <li>
+        <div class="seat occupied"></div>
+        <small>Ocupada</small>
+      </li>
+    </ul>
+
+    <div class="container">
+      <div class="screen"></div>
+
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+      </div>
+      <div class="row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+      </div>
+    </div>
+
+    <p class="text">
+      Você selecionou <span id="count">0</span> cadeiras por um preço de R$
+      <span id="total">0</span>
+    </p>
+
+    <script src="script.js"></script>
+  </body>
+</html>

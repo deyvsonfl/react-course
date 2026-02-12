@@ -4,6 +4,12 @@ const seats = document.querySelectorAll(".row .seat:not(.occupied)");
 const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
+const moviePosters = {
+  10: "https://image.tmdb.org/t/p/w300/q6725aR8Zs4IwGMXzZT8aC8lh41.jpg", // Vingadores
+  12: "https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg", // Coringa
+  8: "https://image.tmdb.org/t/p/w300/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg", // Toy Story
+};
+const posterImage = document.getElementById("movie-poster");
 
 populateUI(); // 1. Chama a função que carrega os dados salvos assim que a página abre
 
@@ -12,6 +18,16 @@ let ticketPrice = +movieSelect.value;
 function setMovieData(movieIndex, moviePrice) {
   localStorage.setItem("selectedMovieIndex", movieIndex);
   localStorage.setItem("selectedMoviePrice", moviePrice);
+}
+
+function updatePoster() {
+  const selectedValue = movieSelect.value; // Pega o valor (10, 12 ou 8)
+  const imageUrl = moviePosters[selectedValue]; // Busca no dicionário
+
+  if (imageUrl) {
+    posterImage.src = imageUrl; // Troca a imagem
+    posterImage.style.display = "block"; // Faz a imagem aparecer
+  }
 }
 
 // Função para atualizar total e contagem
@@ -55,6 +71,7 @@ function populateUI() {
 movieSelect.addEventListener("change", (e) => {
   ticketPrice = +e.target.value;
   setMovieData(e.target.selectedIndex, e.target.value);
+  updatePoster();
   updateSelectedCount();
 });
 
@@ -95,5 +112,7 @@ checkoutBtn.addEventListener("click", () => {
   // Atualiza os textos para 0
   updateSelectedCount();
 });
+
+updatePoster();
 // Atualiza a contagem inicial ao carregar a página
 updateSelectedCount();

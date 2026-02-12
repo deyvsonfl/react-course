@@ -9,6 +9,14 @@ body {
   font-family: Arial, sans-serif;
 }
 
+#movie-poster {
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  display: none;
+  margin-bottom: 20px;
+}
+
 .screen {
   background-color: #fff;
   height: 70px;

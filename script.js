@@ -4,12 +4,50 @@ const seats = document.querySelectorAll(".row .seat:not(.occupied)");
 const count = document.getElementById("count");
 const total = document.getElementById("total");
 const movieSelect = document.getElementById("movie");
-const moviePosters = {
-  10: "https://image.tmdb.org/t/p/w300/q6725aR8Zs4IwGMXzZT8aC8lh41.jpg", // Vingadores
-  12: "https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg", // Coringa
-  8: "https://image.tmdb.org/t/p/w300/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg", // Toy Story
-};
 const posterImage = document.getElementById("movie-poster");
+
+let moviesList = [];
+
+async function fetchMovies() {
+  try {
+    // 1. O fetch vai lá no arquivo buscar (como um garçom indo na cozinha)
+    const response = await fetch("./filmes.json");
+
+    // 2. Transforma a resposta em dados que o JS entende
+    const data = await response.json();
+
+    // 3. Salva na nossa lista global
+    moviesList = data;
+
+    // 4. SÓ AGORA desenha a tela
+    renderMovies();
+
+    // 5. E carrega o estado anterior (se tiver salvo)
+    populateUI();
+    updatePoster();
+    updateSelectedCount();
+  } catch (error) {
+    console.error("Erro ao buscar filmes:", error);
+    alert(
+      "Erro ao carregar os filmes. Verifique se está rodando em um servidor local.",
+    );
+  }
+}
+
+// Função de desenhar (igual a antes, mas agora chamada depois dos dados chegarem)
+function renderMovies() {
+  const movieSelect = document.getElementById("movie");
+
+  moviesList.forEach((movie, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.innerText = `${movie.name} (R$ ${movie.price})`;
+    movieSelect.appendChild(option);
+  });
+}
+
+// Inicia o processo
+fetchMovies();
 
 populateUI(); // 1. Chama a função que carrega os dados salvos assim que a página abre
 
@@ -22,11 +60,13 @@ function setMovieData(movieIndex, moviePrice) {
 
 function updatePoster() {
   const selectedValue = movieSelect.value; // Pega o valor (10, 12 ou 8)
-  const imageUrl = moviePosters[selectedValue]; // Busca no dicionário
+  const movieData = moviesList[selectedValue]; // Busca no dicionário
 
-  if (imageUrl) {
-    posterImage.src = imageUrl; // Troca a imagem
-    posterImage.style.display = "block"; // Faz a imagem aparecer
+  if (movieData) {
+    posterImage.src = movieData.image;
+    posterImage.style.display = "block";
+    // Atualiza o preço global baseado na lista, não no HTML
+    ticketPrice = movieData.price;
   }
 }
 
@@ -69,9 +109,8 @@ function populateUI() {
 
 // Evento de troca de filme
 movieSelect.addEventListener("change", (e) => {
-  ticketPrice = +e.target.value;
-  setMovieData(e.target.selectedIndex, e.target.value);
   updatePoster();
+  setMovieData(e.target.selectedIndex, e.target.value);
   updateSelectedCount();
 });
 
